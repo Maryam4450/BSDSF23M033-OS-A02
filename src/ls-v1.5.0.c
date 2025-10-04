@@ -338,7 +338,7 @@ static void print_long_format(const char *path, const char *filename)
 
     /* print colored filename (no extra padding) */
     /* path contains dir/name; we already have path to get lstat info again if needed */
-    print_colored_name_with_pad(path, filename, 0); 
+    print_colored_name_with_pad(".", filename, 0); 
     putchar('\n');
 }
 
