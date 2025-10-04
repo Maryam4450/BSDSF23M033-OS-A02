@@ -15,8 +15,8 @@ BIN_DIR = bin
 TARGET = $(BIN_DIR)/ls
 
 # Source and object files
-SRC = $(SRC_DIR)/lsv1.0.0.c
-OBJ = $(OBJ_DIR)/lsv1.0.0.o
+SRC = $(SRC_DIR)/ls-v1.1.0.c
+OBJ = $(OBJ_DIR)/ls-v1.1.0.o
 
 # Default target
 all: $(TARGET)
