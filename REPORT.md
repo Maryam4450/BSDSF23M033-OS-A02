@@ -88,3 +88,52 @@ Each display mode has its own dedicated function.
 ---
                          Feature-5: ls-v1.4.0 – Alphabetical Sort 
 ---
+
+**Q1: Why is it necessary to read all directory entries into memory before you can sort them? What are the potential drawbacks of this approach for directories containing millions of files?**
+To sort filenames, all entries must first be stored in memory (e.g., in an array) so the sorting algorithm can compare and reorder them.
+The drawback is high memory usage and slow performance — storing millions of entries can exhaust memory and increase sorting time significantly.
+
+**Q2: Explain the purpose and signature of the comparison function required by qsort(). How does it work, and why must it take const void * arguments?
+qsort() needs a comparison function to decide the order of two elements.**
+Its signature is:
+int cmpstring(const void *a, const void *b);
+It returns negative, zero, or positive depending on whether a < b, a == b, or a > b.
+The parameters are const void * so that the function can work with any data type (generic) and not modify the elements being compared.
+
+---
+                         Feature-6: ls-v1.5.0 – Colorized Output Based on File Type 
+---
+
+**Q1: How do ANSI escape codes work to produce color in a standard Linux terminal? Show the specific code sequence for printing text in green.**
+
+**Answer:**
+ANSI escape codes are special character sequences that control text formatting, color, and style in the terminal. They start with \033[ (ESC), followed by parameters and end with m.
+For example:
+*printf("\033[32mThis text is green\033[0m\n");*
+Here:
+\033[32m → sets green foreground color.
+\033[0m → resets color back to default.
+
+**Q2: To color an executable file, you need to check its permission bits. Explain which bits in the st_mode field you need to check to determine if a file is executable by the owner, group, or others.**
+
+**Answer:**
+The executable permission bits in the st_mode field are:
+S_IXUSR → executable by owner
+S_IXGRP → executable by group
+S_IXOTH → executable by others
+
+---
+                         Feature-7: ls-v1.6.0 – Recursive Listing (-R Option)
+---
+
+**Q1: In a recursive function, what is a "base case"? In the context of your recursive ls, what is the base case that stops the recursion from continuing forever?**
+
+Answer:
+A base case is the condition in a recursive function that stops further recursive calls.
+In the recursive ls, the base case occurs when the program encounters a directory with no subdirectories or when it reaches "." or ".." (to avoid looping back to the parent or current directory). This prevents infinite recursion through directory cycles.
+
+**Q2: Explain why it is essential to construct a full path (e.g., "parent_dir/subdir") before making a recursive call. What would happen if you simply called do_ls("subdir") from within the do_ls("parent_dir") function call?**
+
+**Answer:**
+It’s essential to construct the full path (parent_dir/subdir) so the program knows the exact location of the subdirectory relative to the filesystem.
+If you only called do_ls("subdir"), the program would look for "subdir" in the current working directory instead of inside "parent_dir", causing incorrect traversal or “directory not found” errors during recursion.
